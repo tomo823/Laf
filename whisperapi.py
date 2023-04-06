@@ -3,19 +3,20 @@ from yt_dlp import YoutubeDL
 import os
 import mimetypes
 import whisper
-import json
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def youtube(URLS):
     
     ydl_opts = {
         'format': 'mp3/bestaudio/best',
+        'ignoreerrors': True,
 
         'postprocessors': [{  
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
+            
         }]
     }
 
@@ -31,7 +32,7 @@ def text(video):
     f = open(f"{video}.mp3", "rb")
     transcript = openai.Audio.transcribe("whisper-1", f)
 
-    with open(f"{video}", "w", encoding="UTF-8") as file:
+    with open(f"{video}.txt", "w", encoding="UTF-8") as file:
         file.write(transcript["text"])
         file.close()
     os.remove(f"{video}.mp3")
