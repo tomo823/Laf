@@ -1,7 +1,11 @@
-# Laf
-GUI.py：名前の通りGUI(Tkinter)を作成するためのファイルで、途中まで制作していますが、無視していただければと思います。
+#オンライン家庭教師ボット作成
+##whisperapi.py, move.py, llamaindex.pyの順番で行う
 
-mission.py：2つのファイルをまとめたファイルで、YouTubeの音声をテキストファイルに入力するところまでを行います。
-現在はファイルを実行し、"Input: "とCLIに表示されてURLを貼り付けると実行できるようにしています。
+whisperapi.py:
+YouTubeからの音声書き起こし
 
-Llama-Index.py：base.pyにおける__init__()の引数の問題（予期していなかったdocument変数が加えられる）に直面しています。
+move.py:
+書き起こしたファイルをフォルダにまとめる
+
+llamaindex.py:
+インデックス入力→出力
