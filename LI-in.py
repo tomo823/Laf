@@ -6,7 +6,7 @@ from llama_index.llm_predictor.chatgpt import ChatGPTLLMPredictor
 import os
 
 
-os.environ["OPENAI_API_KEY"] = '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'
+os.environ["OPENAI_API_KEY"] = '<API_KEY>'
 
 llm_predictor = LLMPredictor(
     llm=ChatOpenAI(
