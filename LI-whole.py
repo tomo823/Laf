@@ -29,3 +29,5 @@ print(response)
 
 index.save_to_disk('index.json')
 loaded_index = GPTSimpleVectorIndex.load_from_disk('index.json')
+
+
