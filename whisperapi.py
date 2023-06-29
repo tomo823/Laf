@@ -1,4 +1,5 @@
 #download URL from YouTube and convert it into text files
+#DONT push this file to GitHub beacause of API key
 
 import openai
 from yt_dlp import YoutubeDL
