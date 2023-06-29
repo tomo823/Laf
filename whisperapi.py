@@ -7,7 +7,7 @@ import mimetypes
 import whisper
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def youtube(URLS):
     
@@ -46,5 +46,4 @@ if __name__ == "__main__":
     youtube(url)
     for video in video_name:
         text(video)
-
 
