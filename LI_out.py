@@ -45,7 +45,7 @@ folder_list = [
     "./movies/【中3数学】二次方程式",
     "./movies/【中3数学】平方根",
     "./movies/高校数学１  集合と命題",
-    "./movies/資料の活用",]
+    "./movies/資料の活用"]
 
 
 for folder in folder_list:

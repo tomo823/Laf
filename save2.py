@@ -45,18 +45,17 @@ for files in folder_list:
             list.append(text)
 
 
-os.environ["OPENAI_API_KEY"] = "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"
-openai.api_key = "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"
+os.environ["OPENAI_API_KEY"] = "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"
+openai.api_key = "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"
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, force=True)
+"""logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, force=True)"""
 
 
-api_key = "c53bdc0a-8999-428a-96e4-ada87a86cae9"
+api_key = "507137fd-704c-495c-96cf-51f12d7a943e"
 pinecone.init(api_key=api_key, environment="us-west4-gcp-free", pod_type="starter")
 """pinecone.create_index('keyword-search', dimension=1536, metric="dotproduct", shards=1, replicas=1, pod_type="starter")"""
 
-pinecone.describe_index("keyword-search")
 
 pinecone_index = pinecone.Index('keyword-search')
 
@@ -73,7 +72,7 @@ vector_store = PineconeVectorStore(pinecone_index=pinecone.Index("keyword-search
 documents = []
 for folder in folder_list:
     #folderには各Directoryが入っている
-    #1個1個のDirectoryの中身をdocumentsに入れている
+    #1個1個のDirectoryの中身をdocumentに入れている
     #documentsはlist型
     document = SimpleDirectoryReader(folder).load_data()
     documents.extend(document)
@@ -86,13 +85,20 @@ storage_context = StorageContext.from_defaults(vector_store=vector_store)
 """index = VectorStoreIndex.from_documents(documents, storage_context=storage_context)"""
 #pineconeからindexを取得
 index = VectorStoreIndex.from_vector_store(vector_store)
-
+index1 = pinecone.Index("keyword-search")
 
 query_engine = index.as_query_engine(
     vector_store_query_mode="hybrid", 
     similarity_top_k=2
     )
 
+print(query_engine)
+
 response = query_engine.query("三平方の定理とは？")
-print(llama_index.indices.response.base_builder)
-print(llama_index.indices.utils)
+
+#references
+print(response.source_nodes)
+"""print(llama_index.indices.response.base_builder)
+print(llama_index.indices.utils)"""
+"""index_stats_response = index1.describe_index_stats()
+print(index_stats_response)"""

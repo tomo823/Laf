@@ -1,3 +1,5 @@
+#download URL from YouTube and convert it into text files
+
 import openai
 from yt_dlp import YoutubeDL
 import os
@@ -5,7 +7,7 @@ import mimetypes
 import whisper
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def youtube(URLS):
     
@@ -44,3 +46,5 @@ if __name__ == "__main__":
     youtube(url)
     for video in video_name:
         text(video)
+
+
