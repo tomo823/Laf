@@ -7,7 +7,10 @@ from llama_index.vector_stores import PineconeVectorStore
 from llama_index.storage.storage_context import StorageContext
 from llama_index import VectorStoreIndex, SimpleDirectoryReader
 import openai
-import llama_index
+import json
+
+
+import re
 
 
 folder_list = [
@@ -49,7 +52,7 @@ os.environ["OPENAI_API_KEY"] = <OPENAI-API-KEY>
 openai.api_key = <OPENAI-API-KEY>
 
 
-logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, force=True)
+"""logging.basicConfig(stream=sys.stdout, level=logging.DEBUG, force=True)"""
 
 
 api_key = <PINECONE-API-KEY>
@@ -86,4 +89,60 @@ query_engine = index.as_query_engine(
     similarity_top_k=2
     )
 
+#Responding to a query
 response = query_engine.query("三平方の定理とは？")
+print(response, end="\n\n")
+
+
+#Getting a part of Reference
+"""print("Nodes:")
+print(response.source_nodes[0].node.text, end="\n\n")
+print(response.source_nodes[1].node.text, end="\n\n")"""
+
+
+#Getting the title of the Reference
+dict = {}
+Dict = {}
+Path = {}
+key = []
+for files in folder_list:
+    path_list = glob.glob(files + "/*")
+    for path in path_list:
+        for i in range(2):
+            with open(path, "r") as f:
+                text = f.read()
+                #Comparing the text of the node with the text of the response
+                if re.search(response.source_nodes[i].node.text, text):
+                    #pathとしてkeyを取得、textとしてvalueを取得
+                    dict[path] = text
+                    #pathの出力
+                    """print(f"Pathの出力:\n{path}")"""
+                    #keyのlist化
+                    key.append(path)
+                    
+                    """print(type(re.sub(r'\..*\/', '', dict[path].keys())))"""
+
+"""print(f"Pathのlistを出力:\n{key}", end = "\n\n\n")"""
+
+with open("test.json") as f:
+    d = json.load(f)
+    """print(type(d), end="\n\n")"""
+    for i in d.values():
+        for j in key:
+            #keyの中からファイル名だけを取得する。type=str.
+            if i == re.sub(r'\..*\/', '', j).rstrip(".txt"):
+                print(i)
+                keys = [k for k, v in d.items() if v == i]
+                #listを出力
+                print(keys, end="\n\n")
+                """print(type(keys), end="\n\n")"""
+                """print(d.keys(i), end="\n\n")"""
+                """print(dict[j], end="\n\n")
+                Dict[i] = dict[j]
+                Path[i] = j"""
+
+"""for i in key:
+    #keyの中からファイル名だけを取得する。type=str.
+    print((re.sub(r'\..*\/', '', j)).rstrip(".txt"), end="\n\n")"""
+"""print(dict.keys())"""
+
