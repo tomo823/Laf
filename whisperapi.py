@@ -1,21 +1,25 @@
+#download URL from YouTube and convert it into text files
+#DONT push this file to GitHub beacause of API key
+
 import openai
 from yt_dlp import YoutubeDL
 import os
 import mimetypes
 import whisper
-import json
 
 
-openai.api_key = "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"
+openai.api_key = "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"
 
 def youtube(URLS):
     
     ydl_opts = {
         'format': 'mp3/bestaudio/best',
+        'ignoreerrors': True,
 
         'postprocessors': [{  
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
+            
         }]
     }
 
@@ -31,7 +35,7 @@ def text(video):
     f = open(f"{video}.mp3", "rb")
     transcript = openai.Audio.transcribe("whisper-1", f)
 
-    with open(f"{video}", "w", encoding="UTF-8") as file:
+    with open(f"{video}.txt", "w", encoding="UTF-8") as file:
         file.write(transcript["text"])
         file.close()
     os.remove(f"{video}.mp3")
@@ -43,3 +47,4 @@ if __name__ == "__main__":
     youtube(url)
     for video in video_name:
         text(video)
+
